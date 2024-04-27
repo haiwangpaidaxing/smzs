@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>点亮生命之树</title>
+    <!-- 移动端rem转换 -->
+    <script src="./js/rem.js"></script>
+    <!-- 重置样式 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- 加入游戏 -->
+    <div id="joinGame">
+        <p><img src="./img/1-加入游戏/大厅.png" alt="" srcset=""></p>
+        <button onclick="serverSendMsg('JoinRoom')"></button>
+    </div>
+
+    <!-- 进入房间 -->
+    <!-- 做好倒计时触发把onclick删除  27行这个onclick是测试的 -->
+    <div id="enterRoom">
+        <p id="roomPone">
+            <img src="./img/2-进入房间/房间.png" alt="">
+        </p>
+        <p id="roomPtwo"><img src="./img/2-进入房间/准备时间：.png" alt="" srcset="" id="imgSize">
+            <img src="./img/2-进入房间/0.png" alt="" srcset="" id="countImg1">
+            <img src="./img/2-进入房间/0.png" alt="" srcset="" id="countImg2">
+        </p>
+        <!-- <p>您是第：<span id="location"></span>号位</p> -->
+        <p id="roomP">
+            <img src="./img/2-进入房间/您控制的是：.png" alt="" srcset="" id="imgSize">
+            <img src="./img/2-进入房间/0.png" alt="" srcset="" id="location">
+            <img src="./img/2-进入房间/号位.png" alt="" srcset="" id="imgSize1">
+        </p>
+        <p id="roomFive">
+            <img src="./img/2-进入房间/准备比赛.png" alt="">
+        </p>
+    </div>
+
+    <!-- 开始游戏倒计时 -->
+    <!-- 做好倒计时触发把onclick删除  27行这个onclick是测试的 -->
+    <div id="playGame">
+        <!-- <p>开始游戏倒计时</p> -->
+        <div id="gameCount">
+            <img src="./img/3-开始游戏倒计时/0.png" id="gameCountImg" alt="" srcset="">
+        </div>
+    </div>
+
+    <!-- 点击蓄能 -->
+    <div id="charge">
+        <p><img src="./img/4-游戏中/点击按钮蓄能.png" alt="" srcset=""></p>
+        <button id="clickCharge" onclick="serverSendMsg('ClickGameBtn'), chargeGuang()"></button>
+
+        <div id="chargeImgS">
+            <img src="./img/光束1/guangshu_00.png" id="chargeImg" alt="">
+            <img src="./img/光束1/guangshu_00.png" id="chargeImg2" alt="">
+            <img src="./img/光束1/guangshu_00.png" id="chargeImg3" alt="">
+            <img src="./img/光束1/guangshu_00.png" id="chargeImg4" alt="">
+        </div>
+    </div>
+
+    <!-- 胜利 -->
+    <div id="win">
+        <div id="winBg">
+            <img src="./img/5-比赛结果/冠军.png" alt="" srcset="">
+        </div>
+    </div>
+
+    <!-- 失败 -->
+    <div id="fail">
+        <div id="failBg">
+            <img src="./img/5-比赛结果/输了.png" alt="" srcset="">
+        </div>
+    </div>
+
+    <!-- 点亮生命之树 -->
+    <div id="lit">
+        <p><img src="./img/6-结束点亮-生命之树/点亮生命之树.png" alt=""></p>
+        <div id="litDown" onmousedown="serverSendMsg('ClickWinBtn')" ontouchstart="down(),downServer()"
+            ontouchend="up(),upServer()">
+            <button id="litClick">
+            </button>
+            <img id="down2" src="./img/光束2/聚集_00.png" alt="" srcset="">
+        </div>
+        <div>
+            <img id="blueImg" src="./img/光束1/guangshu_00.png" alt="">
+            <img id="blueImg2" src="./img/光束1/guangshu_00.png" alt="">
+            <img id="blueImg3" src="./img/光束1/guangshu_00.png" alt="">
+        </div>
+    </div>
+
+    <div id="with">
+        <img src="./img/7-游戏结束/请等待，返回大厅.png" id="back" alt="">
+        <div id="withFlexBox">
+            <div class="withFlexBoxs" style="width: 40%;">
+                <img src="./img/7-游戏结束/树图片/见血封喉.png" class="shu" alt="">
+                <div class="shuName">
+                    <img src="./img/7-游戏结束/树名称/见血封喉.png" alt="" />
+                </div>
+            </div>
+            <div class="withFlexBoxs" style="width: 40%;">
+                <img src="./img/7-游戏结束/树图片/蓖齿苏铁.png" class="shu" alt="">
+                <div class="shuName">
+                    <img src="./img/7-游戏结束/树名称/蓖齿苏铁.png" alt="" />
+                </div>
+            </div>
+            <div class="withFlexBoxs" style="width: 40%;">
+                <img src="./img/7-游戏结束/树图片/大叶骨碎补.png" class="shu" alt="">
+                <div class="shuName">
+                    <img src="./img/7-游戏结束/树名称/大叶骨碎补.png" alt="" />
+                </div>
+            </div>
+            <div class="withFlexBoxs" style="width: 40%;">
+                <img src="./img/7-游戏结束/树图片/笔筒树.png" class="shu" alt="">
+                <div class="shuName">
+                    <img src="./img/7-游戏结束/树名称/笔筒树.png" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="bgPlayAudio" onclick="bgAudioStop()">
+    </div>
+    <div id="bgStopAudio" onclick="bgAudioPlay()">
+    </div>
+
+    <!-- 音频元素 -->
+    <audio src="./img/H5音效/倒计时.wav" id="countDownAudio"></audio>
+    <audio src="./img/H5音效/失败.wav" id="filAudio"></audio>
+    <audio src="./img/H5音效/按钮点击.wav" id="btnClickAudio"></audio>
+    <audio src="./img/H5音效/背景音乐2.mp3" id="bgAudioTwoAudio">
+        <audio src="./img/H5音效/背景音乐1.mp3" id="bgAudioOneAudio">
+            <audio src="./img/H5音效/胜利.wav" id="win"></audio>
+</body>
+<script src="./js/index.js"></script>
+<script>
+    //客户端ID
+    var clientID = -1;
+    //3.tcp.vip.cpolar.cn:12205
+    var serverUri = "ws://22.tcp.cpolar.top:13078"// "ws://5.tcp.vip.cpolar.cn:10518"//22.tcp.cpolar.top:13078
+    // 创建 WebSocket 服务器 127.0.0.1 7070
+    var server = new WebSocket(serverUri);
+
+    // 监听 WebSocket 服务器连接事件
+    server.onopen = function () {
+        console.log("成功连接服务器...");
+    };
+
+    // 监听 WebSocket 服务器关闭事件
+    server.onclose = function () {
+        console.log("客户端已关闭");
+        // window.location.reload()
+    };
+
+    server.onmessage = function (event) {
+        var receivedMessage = event.data;
+        var json = event.data;
+
+        try {
+            // 将接收到的 JSON 字符串反序列化为类对象
+            console.log("收到消息：" + event.data);
+            var serverData = JSON.parse(json);
+            findCountImg(serverData.roomCountDown)
+
+            console.log("处理类型" + serverData.msgID);
+            if (serverData.msgID == "Error") {
+                console.log("Error=" + serverData.errorMsg);
+            }
+            else if (serverData.msgID == "EnterRoom")//进入房间
+            {
+                //console.log("处理EnterRoom");
+                //跳转到房间界面
+                //clientID=serverData.clientID;
+                joinGame.style.display = "none"
+                enterRoom.style.display = "block"
+
+                findLocation(serverData.gameID)
+
+                // enterRoomCount.innerHTML= serverData.roomCountDown; 
+                // enterRoomLocation.innerHTML= serverData.gameID; 
+            }
+            else if (serverData.msgID == "UpdateRoomCountDown")//房间倒计时
+            {
+                countsDown(serverData.roomCountDown)
+                findroomCountDown(serverData.roomCountDown)
+                //    enterRoomCount.innerHTML= serverData.roomCountDown; 
+            }
+            else if (serverData.msgID == "EnterStartGameCountDownPanel")//切换开始游戏倒计时界面
+            {
+                closeAll();
+                enterRoom.style.display = "none"
+                //enterRoom.style.display='none'
+                playGame.style.display = 'block'
+            }
+            else if (serverData.msgID == "UpdateStartGameCountDown")//开始游戏倒计时
+            {
+                // gameCount.innerHTML = serverData.roomCountDown;
+                findroomCountDown(serverData.roomCountDown)
+            }
+            else if (serverData.msgID == "EnterStartGamePanel")//切换游戏界面
+            {
+                closeAll();
+                playGame.style.display = "none"
+                charge.style.display = 'block'
+            }
+            else if (serverData.msgID == "EnterWinPanel")//切换胜利界面
+            {
+                closeAll();
+                win.style.display = 'block'
+
+            }
+            else if (serverData.msgID == "EnterFailsPanel")//切换失败界面
+            {
+                closeAll();
+                fail.style.display = 'block'
+            }
+            else if (serverData.msgID == "EnterJoinGame") {
+                closeAll();
+                joinGame.style.display = "block"
+            }
+            else if (serverData.msgID == "EnterWinBtnPanel") {
+                closeAll();
+                lit.style.display = "block"
+            }
+            else if (serverData.msgID == "EntryFailure") {
+                alert(serverData.errorMsg)
+            }
+            else if (serverData.msgID == "GameOver") {
+                closeAll();
+                gameOver.style.display = 'block'
+            }
+        }
+        catch (error) {
+            // 解析失败时执行备用操作
+            console.log("无法解析 JSON 数据:", error);
+            // 执行其他操作...
+        }
+
+    };
+
+    //光束
+    var blueImg = document.getElementById('blueImg')
+    var blueImg2 = document.getElementById('blueImg2')
+    var blueImg3 = document.getElementById('blueImg3')
+    var lit123 = document.getElementById('litDown')
+    var downImg2s = document.getElementById('down2')
+    var chargeImg = document.getElementById('chargeImg')
+    var chargeImg2 = document.getElementById('chargeImg2')
+    var chargeImg3 = document.getElementById('chargeImg3')
+    var chargeImg4 = document.getElementById('chargeImg4')
+    //光束图片数组
+    var downImg3 = ['./img/光束1/guangshu_00.png', './img/光束1/guangshu_01.png', './img/光束1/guangshu_02.png', './img/光束1/guangshu_03.png', './img/光束1/guangshu_04.png', './img/光束1/guangshu_05.png', './img/光束1/guangshu_06.png', './img/光束1/guangshu_07.png', './img/光束1/guangshu_08.png', './img/光束1/guangshu_09.png',]
+    //聚集图片数组
+    var downImg2 = ['./img/光束2/聚集_00.png', './img/光束2/聚集_01.png', './img/光束2/聚集_02.png', './img/光束2/聚集_03.png', './img/光束2/聚集_04.png', './img/光束2/聚集_05.png', './img/光束2/聚集_06.png', './img/光束2/聚集_07.png', './img/光束2/聚集_08.png', './img/光束2/聚集_09.png',]
+    // 7-游戏结束
+    var withBlock = document.getElementById('with')
+    var withBlockStyleBlock = getComputedStyle(withBlock)
+    var withFlexBoxs = document.getElementsByClassName('withFlexBoxs')
+    var withFlexBoxsWidth = withFlexBoxs[0]
+    var withFlexBoxsWidth2 = withFlexBoxs[1]
+    var withFlexBoxsWidth3 = withFlexBoxs[2]
+    var withFlexBoxsWidth4 = withFlexBoxs[3]
+    // 树科普 定时器ID   
+    var withTimeId = null;
+    var withCount = 0
+
+    //4-游戏中 点击 定时器ID
+    var chargeTimeID = null;
+    var chargeImgYx = -30;
+    var chargeCount = 0;
+    // 点击触发定时器
+    function chargeGuang() {
+        clearInterval(chargeTimeID)
+        chargeTimeID = setInterval(function () {
+            chargeCount++
+            if (chargeCount >= 9) {
+                chargeCount = 0
+            }
+            chargeImg.src = downImg3[chargeCount]
+            chargeImg2.src = downImg3[chargeCount]
+            chargeImg3.src = downImg3[chargeCount]
+            chargeImg4.src = downImg3[chargeCount]
+            chargeImgYx++
+            var imgyx = chargeImg2.offsetTop
+            if (imgyx >= -300) {
+                console.log(chargeImgYx);
+                chargeImg.style.bottom = chargeImgYx + '%'
+                chargeImg2.style.bottom = chargeImgYx + 6 + '%'
+                chargeImg3.style.bottom = chargeImgYx + 3 + '%'
+                chargeImg4.style.bottom = chargeImgYx + -4 + '%'
+            } else if (imgyx <= -300) {
+                chargeImgYx = -30
+                chargeImg.style.bottom = chargeImgYx + '%'
+                chargeImg2.style.bottom = chargeImgYx + '%'
+                chargeImg3.style.bottom = chargeImgYx + '%'
+                chargeImg4.style.bottom = chargeImgYx + '%'
+                clearInterval(chargeTimeID)
+            }
+        }, 1)
+    }
+
+    // 6-结束点亮-生命之树   长按树触发事件
+    var serverTimeID = null;
+    function downServer() {
+        serverTimeID = setInterval(function () {
+            serverSendMsg('ClickWinBtn')
+        }, 100)
+    }
+    function upServer() {
+        clearInterval(serverTimeID)
+    }
+
+    //6-光束起始位置
+    var yS = -20;
+    //6-点击 定时器ID
+    var timeId = null;
+    var count = 0;
+    var count2 = 0;
+    function down() {
+        lit123.id = 'litDownactive'
+        timeId = setInterval(function () {
+            count++
+            count2++
+            downImg2s.src = downImg2[count]
+            if (count == 9) {
+                count = 0
+            }
+            var y = blueImg3.offsetTop;
+            yS++
+            if (yS <= 24) {
+                blueImg.style.bottom = yS + '%';
+                blueImg.style.left = yS + '%';
+                blueImg2.style.bottom = yS + 4 + '%';
+                blueImg3.style.bottom = yS + '%';
+                blueImg3.style.right = yS + '%';
+
+                if (count2 >= 9) {
+                    count2 = 0
+                }
+                blueImg.src = downImg3[count2];
+                blueImg2.src = downImg3[count2];
+                blueImg3.src = downImg3[count2];
+
+
+            } else if (yS >= 24) {
+                yS = -20
+                blueImg.style.bottom = yS + '%'
+                blueImg2.style.bottom = yS + '%'
+                blueImg3.style.bottom = yS + '%'
+            }
+        }, 100)
+
+    };
+    //6  -  手指松开聚集光束触发事件
+    function up() {
+        var lit123 = document.getElementById('litDownactive')
+        lit123.id = 'litDown'
+        clearInterval(timeId)
+        yS = -20
+        blueImg.style.bottom = yS + '%'
+        blueImg2.style.bottom = yS + '%'
+        blueImg3.style.bottom = yS + '%'
+    }
+    var lastMessageTimestamp;
+
+    //向服务器发送消息
+    function serverSendMsg(message) {
+
+
+
+        if (!lastMessageTimestamp) {
+            lastMessageTimestamp = 0;
+        }
+        const currentTimestamp = Date.now();
+        const timeElapsed = currentTimestamp - lastMessageTimestamp;
+
+        if (timeElapsed < 5) {
+            console.log("每秒只能发送一条消息，请稍后再试");
+            return;
+        }
+
+        lastMessageTimestamp = currentTimestamp;
+
+
+
+        btnClickAudio.play();
+        if (message == "JoinRoom") {
+            if (server.readyState != WebSocket.OPEN) {
+                alert("加入房间失败，服务器未开启或未连接成功 刷新网页 重试")
+            }
+        }
+
+        if (server.readyState == WebSocket.OPEN) {
+            server.send(message);
+        } else {
+            console.log("未连接无法发送消息");
+        }
+
+    }
+
+</script>
+
+</html>
